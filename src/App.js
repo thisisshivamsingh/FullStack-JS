@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addMovie } from "./store/movies";
 import { setType, fetchUsers } from "./store/users";
@@ -7,7 +8,16 @@ const App = () => {
   const users = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
-  // console.log(movies);
+  useEffect(() => {
+    dispatch(fetchUsers())
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>
@@ -33,7 +43,7 @@ const App = () => {
           : null}
       </ul>
 
-      <button onClick={() => dispatch(fetchUsers())}>Get users</button>
+      {/* <button onClick={() => dispatch(fetchUsers())}>Get users</button> */}
     </>
   );
 };
